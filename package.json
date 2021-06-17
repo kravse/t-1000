@@ -1,0 +1,20 @@
+{
+  "name": "t-1000",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --env production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^9.0.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "underscore": "^1.13.1"
+  }
+}

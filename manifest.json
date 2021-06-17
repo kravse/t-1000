@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "t-1000",
+  "version": "0.0.1",
+  "description": "Detect generated language",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon.png",
+    "128": "images/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "notifications"
+  ],
+  "browser_action": {
+    "default_icon": "images/icon.png",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_idle",
+      "js": ["background.js"],
+      "css": ["styles/main.css"]
+    }
+  ]
+}

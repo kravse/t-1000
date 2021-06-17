@@ -1,0 +1,49 @@
+html {
+  margin: 0;
+}
+html * {
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 300px;
+  font-family: 'Helvetica New', Helvetica, sans-serif;
+  padding: 20px 10px 10px;
+  background-color: #fff4f9;
+  text-align: center;
+  overflow: hidden;
+}
+
+a {
+  color: #6663fc;
+}
+
+a:hover {
+  color: #6663fc;
+  text-decoration: none;
+}
+
+button {
+  border: 0;
+  border-radius: 0;
+  background-color: #ebebeb;
+  padding: 10px 40px;
+  border-radius: 8px;
+  font-size: 30px;
+  font-family: 'Brush Script MT', cursive;
+  color: #ff4c4c;
+}
+
+button:not(.disabled) .off{
+  display: none;
+}
+button.disabled {
+  background-color: #c3ffd7;
+  color: #6663fc
+}
+button.disabled .on{
+  display: none;
+}
