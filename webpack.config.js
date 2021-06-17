@@ -29,10 +29,10 @@ module.exports = (env = {}) => {
             from: 'src/background.js',
           },
           {
-            from: './manifest.json',
+            from: 'src/manifest.json',
           },
           {
-            from: './popup.html',
+            from: 'src/popup.html',
           },
           {
             from: 'src/styles/**/*.css',
