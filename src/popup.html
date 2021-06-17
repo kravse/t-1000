@@ -7,10 +7,25 @@
     <link rel="stylesheet" href="./styles/popup.css">
   </head>
   <body>
-    <button id="toggle">
-      <span class="on">ON</span>
-      <span class="off">OFF</span>
-    </button>
+    <div id="container" class="container">
+      <h1 class="title">t-1000</h1>
+      <div class="is-key">
+        <p class="code"><strong>Key: </strong>********************</p>
+        <button id="edit-key" type="button">Edit</button>
+      </div>
+      <form id="api-form">
+        <p class="alert">!!! Whoops that key is bad.</p>
+        <div class="inputs">
+          <input id="api-key" class="code" placeholder="Your Cohere API Key" name="key" type="password" />
+          <button type="submit" class="fancy">Add</button>
+        </div>
+
+      </form>
+      <!-- <button id="toggle">
+            <span class="on">ON</span>
+            <span class="off">OFF</span>
+          </button> -->
+    </div>
     <script src="./index.js"></script>
   </body>
 </html>

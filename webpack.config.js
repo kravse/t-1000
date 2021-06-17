@@ -7,6 +7,7 @@ module.exports = (env = {}) => {
     mode: env.production ? "production" : "development",
     entry: './src/scripts.js',
     // devtool: 'source-map',
+    devtool: 'cheap-module-source-map',
     target: 'web',
     resolve: {
       extensions: ['.js'],
