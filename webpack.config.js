@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = (env = {}) => {
   const config = {
     mode: env.production ? "production" : "development",
-    entry: ['./src/scripts.js', './src/styles/base.styl'],
+    entry: ['./src/popup.js', './src/styles/base.styl'],
     // devtool: 'source-map',
     devtool: 'cheap-module-source-map',
     target: 'web',
