@@ -1,0 +1,96 @@
+.key-available
+  #api-form
+    display: none
+
+  .key-display
+    display: flex
+    justify-content: space-between
+
+.key-display
+  display: none
+
+  p
+    border: 2px solid #000
+    padding: 5px
+    line-height: 1em
+    margin: 0
+    width: 70%
+
+  button
+    width: 25%
+
+#api-form
+  width: 100%
+
+  .inputs
+    display: flex
+    justify-content: space-between
+
+  input
+    width: 70%
+    padding: 5px
+    line-height: 1em
+    font-weight: 600
+    color: #000
+
+  button
+    width: 25%
+
+  .alert
+    display: none
+
+  &.error input
+    border-color: $alert
+
+    &::placeholder
+      color: $alert
+
+#content-area
+  width: 100%
+  height: 100%
+  padding: 20px 0
+
+  textarea
+    resize: vertical
+    &::placeholder
+      color: #333
+  .error
+    .alert
+      display: block;
+
+  .alert
+    display: none;
+    background: $alert
+    color: #fff
+
+  p, textarea
+    &.text-area-style
+      height: 100%
+      height: 200px
+      border: 1px solid #000
+      width: 100%
+      font-weight: 600
+      margin: 10px auto
+      line-height: 1em
+      padding: 5px
+      font-size: 12px
+      background: lighten(#b9f5ff, 70%)
+      overflow: scroll
+
+  button
+    width: 100%
+    background: #b9f5ff
+    margin: 0;
+
+    &:hover
+      color: #000
+      background: #00ffa1a1
+
+#result-area
+  display: none
+
+.result-available
+  #content-form
+    display: none
+  #result-area
+    display: block

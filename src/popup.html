@@ -3,29 +3,35 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./styles/normalize.css">
-    <link rel="stylesheet" href="./styles/popup.css">
   </head>
   <body>
     <div id="container" class="container">
       <h1 class="title">t-1000</h1>
-      <div class="is-key">
+      <div class="key-display">
         <p class="code"><strong>Key: </strong>********************</p>
         <button id="edit-key" type="button">Edit</button>
       </div>
       <form id="api-form">
-        <p class="alert">!!! Whoops that key is bad.</p>
         <div class="inputs">
           <input id="api-key" class="code" placeholder="Your Cohere API Key" name="key" type="password" />
           <button type="submit" class="fancy">Add</button>
         </div>
-
       </form>
-      <!-- <button id="toggle">
-            <span class="on">ON</span>
-            <span class="off">OFF</span>
-          </button> -->
+      <div class="workspace">
+        <div id="content-area">
+          <form id="content-form">
+            <p class="alert">&nbsp;⚠ Whoops something went wrong.</p>
+            <textarea id="text-area" class="text-area-style" placeholder="Paste in some text..."></textarea>
+            <button type="submit">Check for bots</button>
+          </form>
+          <div id="result-area">
+            <p id="result-slot" class="text-area-style"></p>
+            <button id="try-again">Try Again</button>
+          </form>
+        </div>
+      </div>
     </div>
+    <span id="result-text"></span>
     <script src="./index.js"></script>
   </body>
 </html>

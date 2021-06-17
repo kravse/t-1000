@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = (env = {}) => {
   const config = {
     mode: env.production ? "production" : "development",
-    entry: './src/scripts.js',
+    entry: ['./src/scripts.js', './src/styles/base.styl'],
     // devtool: 'source-map',
     devtool: 'cheap-module-source-map',
     target: 'web',
@@ -21,6 +21,18 @@ module.exports = (env = {}) => {
     },
     optimization: {
       minimize: false
+    },
+    module: {
+      rules: [
+        {
+          test: /\.styl$/,
+          use: [
+            "style-loader",
+            "css-loader",
+            "stylus-loader"
+          ]
+        },
+      ],
     },
     plugins: [
       new CleanWebpackPlugin(),

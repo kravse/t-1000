@@ -1,4 +1,14 @@
+const COLOR = require('color');
+const AXIOS = require('axios');
+
 document.addEventListener("DOMContentLoaded", async function () {
+  const api_url = 'https://api.cohere.ai/baseline-shark/likelihood'
+  const container = document.getElementById('container');
+  const textNode = document.getElementById('result-text');
+  const result = document.getElementById('result-slot');
+  const form = document.getElementById('api-form');
+  const contentForm = document.getElementById('content-form');
+  const editKey = document.getElementById('edit-key');
   let key;
 
   chrome.storage.sync.get('key', function (val) {
@@ -8,15 +18,24 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     init();
   });
+
   const toggleKey = (show) => {
     if (show) {
-      document.getElementById('container').classList.add('key');
+      container.classList.add('key-available');
     } else {
-      document.getElementById('container').classList.remove('key');
+      container.classList.remove('key-available');
     }
   }
-  const init = () => {
-    const form = document.getElementById('api-form');
+  const handleResponse = (likelihoods) => {
+    result.innerHTML ='';
+    for (val of likelihoods.token_likelihoods) {
+      let clone = textNode.cloneNode(true);
+      clone.innerHTML = val.token;
+      clone.style.background = COLOR.rgb(214, 88, 88, (1 / -val.likelihood));
+      result.appendChild(clone);
+    }
+  }
+  const doListeners = () => {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       form.classList.remove('error');
@@ -28,47 +47,40 @@ document.addEventListener("DOMContentLoaded", async function () {
         toggleKey(true);
       }
     });
-    document.getElementById('edit-key').addEventListener('click', (e) => {
+
+    editKey.addEventListener('click', (e) => {
       toggleKey(false);
+    })
+    document.getElementById('try-again').addEventListener('click', (e)=> {
+      container.classList.remove('result-available')
+      document.getElementById('text-area').value = '';
+    })
+    contentForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      container.classList.remove('result-available')
+      contentForm.classList.remove('error')
+      let text = document.getElementById('text-area').value
+      AXIOS({
+        method: 'post',
+        url: api_url,
+        data: {
+          text: text,
+        },
+        headers: {
+          'Authorization': `BEARER ${key}`,
+          'Content-Type': 'application/json'
+        }
+      }).then(result => {
+        container.classList.add('result-available')
+        handleResponse(result.data);
+      }).catch(e => {
+        contentForm.classList.add('error')
+      })
     })
   }
 
-
-
-  // chrome.storage.local.get(['disabled'], function (result) {
-  //   console.log('Value currently is ' + result.key);
-  // });
-  // let storage = await chrome.storage.local.get(['disabled']);
-  // let disabled = storage.disabled || false;
-  // // chrome.storage.sync.set({ key: value }, function () {
-  //   console.log('Value is set to ' + value);
-  // });
-
-  // chrome.storage.sync.get(['disabled']), function (result) {
-  //   console.log('Value currently is ' + result.key);
-  // });
-  // const setClass = (disabled) => {
-  //   if (disabled) {
-  //     document.getElementById('toggle').classList.add('disabled')
-  //   } else {
-  //     document.getElementById('toggle').classList.remove('disabled')
-  //   }
-  // }
-  // const setState = (disabled) => {
-  //   setClass(disabled)
-  //   chrome.tabs.query({}, tabs => {
-  //     tabs.forEach(tab => {
-  //       chrome.tabs.sendMessage(tab.id, { disable: disabled });
-  //     });
-  //   });
-  // }
-  // setState(disabled);
-  // document.getElementById('api-key').addEventListener("click", (e) => {
-  //   console.log()
-  //   // e.preventDefault();
-  //   // disabled = !disabled
-  //   // chrome.storage.local.set({ ['disabled']: disabled })
-  //   // setState(disabled)
-  // });
+  const init = () => {
+    doListeners();
+  }
 });
 
