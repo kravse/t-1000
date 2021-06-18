@@ -12,15 +12,29 @@ document.addEventListener("DOMContentLoaded", async function () {
   const form = document.getElementById('api-form');
   const contentForm = document.getElementById('content-form');
   const editKey = document.getElementById('edit-key');
+  const submitButton = document.getElementById('submit-button');
+  const capturedTextButton = document.getElementById('captured-text-button');
+  const textArea = document.getElementById('text-area');
+  let capturedText;
   let key;
 
-  chrome.storage.sync.get('key', function (val) {
+  chrome.storage.sync.get(['key', 'PAGE_TEXT'], (val) => {
     if (val.key) {
       key = val.key;
       toggleKey(true);
     }
+    if (val.PAGE_TEXT) {
+      setAvailableText(val.PAGE_TEXT);
+    }
     init();
   });
+
+  const setAvailableText = (text) => {
+    capturedText = text;
+    let textnode = document.createTextNode(text);
+    capturedTextButton.classList.add('visible');
+    capturedTextButton.appendChild(textnode);
+  }
 
   const toggleKey = (show) => {
     if (show) {
@@ -29,6 +43,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       container.classList.remove('key-available');
     }
   }
+
   const handleResponse = (likelihoods) => {
     result.innerHTML = '';
     var likelihood_list = new Array()
@@ -49,8 +64,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     MATHJS.median(likelihood_list)]
     var prediction = RandomForestClassifier.default.predict(features);
     var probability_of_bot = prediction[0] / (prediction[0] + prediction[1])
-    console.log(probability_of_bot)
+    const resultSentence = document.createTextNode(`This text is ${Math.floor(100 * probability_of_bot)}% likely to be a bot.`);
+    document.getElementById('result-sentence').appendChild(resultSentence);
   }
+
   const doListeners = () => {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -69,13 +86,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     })
     document.getElementById('try-again').addEventListener('click', (e) => {
       container.classList.remove('result-available')
-      document.getElementById('text-area').value = '';
+      textArea.value = '';
     })
     contentForm.addEventListener("submit", (e) => {
       e.preventDefault();
       container.classList.remove('result-available')
       contentForm.classList.remove('error')
-      let text = document.getElementById('text-area').value
+      let text = textArea.value
+      submitButton.classList.add('spin')
       AXIOS({
         method: 'post',
         url: api_url,
@@ -91,12 +109,22 @@ document.addEventListener("DOMContentLoaded", async function () {
         handleResponse(result.data);
       }).catch(e => {
         contentForm.classList.add('error')
+      }).finally(() => {
+        submitButton.classList.add('spin')
       })
     })
+    capturedTextButton.addEventListener('click', (e) => {
+      capturedTextButton.classList.remove('visible');
+      textArea.value = capturedText;
+      capturedText = '';
+      chrome.storage.sync.set({ 'PAGE_TEXT': '' });
+      submitButton.click();
+    })
   }
+
 
   const init = () => {
     doListeners();
   }
-});
 
+});

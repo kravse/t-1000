@@ -1,3 +1,9 @@
+@keyframes spin
+  from
+    transform:rotate(0deg)
+  to
+    transform:rotate(360deg)
+
 .key-available
   #api-form
     display: none
@@ -33,7 +39,7 @@
     font-weight: 600
     color: #000
 
-  button
+  button#submit-button
     width: 25%
 
   .alert
@@ -82,6 +88,21 @@
     background: #b9f5ff
     margin: 0;
 
+    &#submit-button
+      overflow: hidden
+
+      span.spinner
+        display: none
+      &.spin
+        span.text
+          display: none
+        span.spinner
+          display: block
+          animation-name: spin;
+          animation-duration: 2000ms;
+          animation-iteration-count: infinite;
+          animation-timing-function: linear;
+
     &:hover
       color: #000
       background: #00ffa1a1
@@ -94,3 +115,32 @@
     display: none
   #result-area
     display: block
+
+#captured-text-button
+  font-size: 12px
+  text-align: left
+  position: relative
+  margin: 20px auto 40px
+  display: none
+  width: 100%
+  overflow: hidden
+  background: #d5c7ff
+
+  &.visible
+    display: block
+
+  &:hover
+    color: #000
+    background: darken(#d5c7ff, 10%)
+    &:before
+      content: "Click to add to text field"
+      position: absolute
+      display: block
+      top: 100%
+      padding: 10px 20px 10px 0
+      left: 0
+      color: #000;
+
+#result-sentence
+  font-size: 12px
+  font-weight: 600
