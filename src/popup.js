@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (!keyValue) {
         form.classList.add('error');
       } else {
+        key = keyValue;
         await chrome.storage.sync.set({ 'key': keyValue });
         toggleKey(true);
       }
