@@ -36,9 +36,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       clone.style.background = COLOR.rgb(214, 88, 214, (1 / -val.likelihood));
       result.appendChild(clone);
     }
-    console.log(RandomForestClassifier);
     console.log("RandomForestClassifier");
-    console.log(RandomForestClassifier([0.09061432497762174, 0.3033870263106966, 0.013660607427535396, 0.4036923086619162, 0.01865715464146048, 0.1699885779807697]));
+    console.log(RandomForestClassifier);
+    console.log(RandomForestClassifier());
+    console.log(RandomForestClassifier.default());
+    console.log(RandomForestClassifier.default().predict([0.09061432497762174, 0.3033870263106966, 0.013660607427535396, 0.4036923086619162, 0.01865715464146048, 0.1699885779807697]));
   }
   const doListeners = () => {
     form.addEventListener("submit", async (e) => {
