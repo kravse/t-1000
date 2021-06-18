@@ -1,5 +1,5 @@
 # T-1000 Bot Detection Chrome Extension
-Built with the [cohere.ai](https://cohere.ai) NLP API.
+Built with the [cohere.ai](https://cohere.ai) NLP API. This is a work in progress.
 
 ### Paste some text and the t-1000 will analyze it for you.
 ![extension example](./src/images/extension-example.png)
