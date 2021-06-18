@@ -1,4 +1,4 @@
-exports.default = RandomForestClassifier = () => {
+function RandomForestClassifier() {
 
   var findMax = function (nums) {
     var index = 0;
@@ -2415,7 +2415,7 @@ exports.default = RandomForestClassifier = () => {
     for (var i = 0; i < trees.length; i++) {
       classes[trees[i](features)]++;
     }
-    return findMax(classes);
+    return classes;
   }
 
 };
@@ -2433,3 +2433,4 @@ if (typeof process !== 'undefined' && typeof process.argv !== 'undefined') {
   }
 }
 
+export default new RandomForestClassifier();

@@ -2,6 +2,7 @@ const RandomForestClassifier = require("./random_forest_classifier.js")
 
 const COLOR = require('color');
 const AXIOS = require('axios');
+const MATHJS = require('mathjs');
 
 document.addEventListener("DOMContentLoaded", async function () {
   const api_url = 'https://api.cohere.ai/baseline-shark/likelihood'
@@ -30,17 +31,25 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
   const handleResponse = (likelihoods) => {
     result.innerHTML = '';
+    var likelihood_list = new Array()
     for (val of likelihoods.token_likelihoods) {
       let clone = textNode.cloneNode(true);
       clone.innerHTML = val.token;
       clone.style.background = COLOR.rgb(214, 88, 214, (1 / -val.likelihood));
       result.appendChild(clone);
+      likelihood_list.push(val.likelihood)
     }
-    console.log("RandomForestClassifier");
-    console.log(RandomForestClassifier);
-    console.log(RandomForestClassifier());
-    console.log(RandomForestClassifier.default());
-    console.log(RandomForestClassifier.default().predict([0.09061432497762174, 0.3033870263106966, 0.013660607427535396, 0.4036923086619162, 0.01865715464146048, 0.1699885779807697]));
+    likelihood_list.shift()
+
+    var features = [likelihoods.likelihood,
+    MATHJS.mean(likelihood_list),
+    MATHJS.variance(likelihood_list),
+    MATHJS.max(likelihood_list),
+    MATHJS.min(likelihood_list),
+    MATHJS.median(likelihood_list)]
+    var prediction = RandomForestClassifier.default.predict(features);
+    var probability_of_bot = prediction[0] / 100
+    console.log(probability_of_bot)
   }
   const doListeners = () => {
     form.addEventListener("submit", async (e) => {
