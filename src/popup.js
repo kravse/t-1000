@@ -9,16 +9,29 @@ document.addEventListener("DOMContentLoaded", async function () {
   const form = document.getElementById('api-form');
   const contentForm = document.getElementById('content-form');
   const editKey = document.getElementById('edit-key');
+  const submitButton = document.getElementById('submit-button');
+  const capturedTextButton = document.getElementById('captured-text-button');
+  const textArea = document.getElementById('text-area');
+  let capturedText;
   let key;
 
-  chrome.storage.sync.get(['key', 'PAGE_TEXT'], function (val) {
+  chrome.storage.sync.get(['key', 'PAGE_TEXT'], (val) =>{
     if (val.key) {
       key = val.key;
       toggleKey(true);
     }
-    if (val.PAGE_TEXT) console.log(val.PAGE_TEXT);
+    if (val.PAGE_TEXT) {
+      setAvailableText(val.PAGE_TEXT);
+    }
     init();
   });
+
+  const setAvailableText = (text) => {
+    capturedText = text;
+    let textnode = document.createTextNode(text);
+    capturedTextButton.classList.add('visible');
+    capturedTextButton.appendChild(textnode);
+  }
 
   const toggleKey = (show) => {
     if (show) {
@@ -54,13 +67,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     })
     document.getElementById('try-again').addEventListener('click', (e)=> {
       container.classList.remove('result-available')
-      document.getElementById('text-area').value = '';
+      textArea.value = '';
     })
     contentForm.addEventListener("submit", (e) => {
       e.preventDefault();
       container.classList.remove('result-available')
       contentForm.classList.remove('error')
-      let text = document.getElementById('text-area').value
+      let text = textArea.value
+      submitButton.classList.add('spin')
       AXIOS({
         method: 'post',
         url: api_url,
@@ -76,7 +90,16 @@ document.addEventListener("DOMContentLoaded", async function () {
         handleResponse(result.data);
       }).catch(e => {
         contentForm.classList.add('error')
+      }).finally(()=> {
+        submitButton.classList.add('spin')
       })
+    })
+    capturedTextButton.addEventListener('click', (e) => {
+      capturedTextButton.classList.remove('visible');
+      textArea.value = capturedText;
+      capturedText = '';
+      chrome.storage.sync.set({ 'PAGE_TEXT': '' });
+      submitButton.click();
     })
   }
 

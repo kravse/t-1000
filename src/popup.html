@@ -18,11 +18,18 @@
         </div>
       </form>
       <div class="workspace">
+        <div id="captured-text-section">
+          <button id="captured-text-button" class="content-button">
+          </button>
+        </div>
         <div id="content-area">
           <form id="content-form">
             <p class="alert">&nbsp;⚠ Whoops something went wrong.</p>
             <textarea id="text-area" class="text-area-style" placeholder="Paste in some text..."></textarea>
-            <button type="submit">Check for bots</button>
+            <button id="submit-button" type="submit">
+              <span class="text">Check for bots</span>
+              <span class="spinner">|</span>
+            </button>
           </form>
           <div id="result-area">
             <p id="result-slot" class="text-area-style"></p>
