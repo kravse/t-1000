@@ -30,7 +30,7 @@ article:hover {
   padding: 2px 10px;
 } */
 
-#t-1000-button:hover {
+#t-1000-button:active {
   background:rgb(0, 107, 150);
 }
 
