@@ -6,11 +6,16 @@ const T1000Main = function () {
 
   function setListeners() {
     let t1000Button = document.getElementById('t-1000-button');
-    document.addEventListener('mouseenter', (e) => {
-      const el = e.target;
-      if (el.nodeName !== 'ARTICLE') return;
-      mostRecentTargetText = el.textContent;
-      const viewport = el.getBoundingClientRect()
+    document.addEventListener('mouseover', (e) => {
+      const ARTICLE = e.path.find(elem => elem.nodeName === 'ARTICLE')
+      if (!ARTICLE) return;
+      const textPortion = ARTICLE.querySelector('div[lang="en"]');
+      if (!textPortion) return;
+      ARTICLE.classList.add('T-1000-border');
+      let text = textPortion.textContent;
+      var urlPattern = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/
+      mostRecentTargetText = text.replace(urlPattern, '');
+      const viewport = ARTICLE.getBoundingClientRect()
       const top = viewport.bottom;
       const right = viewport.right;
       t1000Button.style.opacity = '1';

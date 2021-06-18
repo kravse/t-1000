@@ -5,7 +5,7 @@ const AXIOS = require('axios');
 const MATHJS = require('mathjs');
 
 document.addEventListener("DOMContentLoaded", async function () {
-  const api_url = 'https://api.cohere.ai/baseline-shark/likelihood'
+  const api_url = 'https://api.cohere.ai/baseline-orca/likelihood'
   const container = document.getElementById('container');
   const textNode = document.getElementById('result-text');
   const result = document.getElementById('result-slot');
