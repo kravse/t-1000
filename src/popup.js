@@ -65,7 +65,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     var prediction = RandomForestClassifier.default.predict(features);
     var probability_of_bot = prediction[0] / 100
     const resultSentence = document.createTextNode(`This text is ${Math.floor(100 * probability_of_bot)}% similar to bot written text.`);
-    const resSen = document.getElementById('result-sentence').innerHTML= '';
+    const resSen = document.getElementById('result-sentence')
+    resSen.innerHTML = '';
     resSen.appendChild(resultSentence);
   }
 
