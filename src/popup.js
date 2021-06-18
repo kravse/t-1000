@@ -92,9 +92,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     })
     contentForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      let text = document.getElementById('text-area').value;
+      if (!text) {
+        grabCapturedText();
+        text = document.getElementById('text-area').value;
+        if (!text) return;
+      }
       container.classList.remove('result-available');
       contentForm.classList.remove('error');
-      let text = document.getElementById('text-area').value;
       submitButton.classList.add('spin');
       AXIOS({
         method: 'post',
@@ -112,17 +117,22 @@ document.addEventListener("DOMContentLoaded", async function () {
       }).catch(e => {
         contentForm.classList.add('error')
       }).finally(()=> {
-        submitButton.classList.add('spin')
+        submitButton.classList.remove('spin')
       })
     })
+
     capturedTextButton.addEventListener('click', (e) => {
-      capturedTextButton.classList.remove('visible');
-      textArea.value = capturedText;
-      capturedText = '';
-      console.log(textArea.value)
-      chrome.storage.sync.set({ 'PAGE_TEXT': '' });
+      grabCapturedText();
       submitButton.click();
     })
+  }
+
+  const grabCapturedText = () => {
+    capturedTextButton.classList.remove('visible');
+    textArea.value = capturedText;
+    capturedText = '';
+    console.log(textArea.value)
+    chrome.storage.sync.set({ 'PAGE_TEXT': '' });
   }
 
 
