@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     MATHJS.min(likelihood_list),
     MATHJS.median(likelihood_list)]
     var prediction = RandomForestClassifier.default.predict(features);
-    var probability_of_bot = prediction[0] / 100
+    var probability_of_bot = prediction[0] / (prediction[0] + prediction[1])
     console.log(probability_of_bot)
   }
   const doListeners = () => {
