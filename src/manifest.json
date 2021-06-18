@@ -18,8 +18,9 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*"],
-      "run_at": "document_idle",
+      "matches": ["*://*/*"],
+      "run_at": "document_end",
+      "all_frames": true,
       "js": ["background.js"],
       "css": ["styles/main.css"]
     }

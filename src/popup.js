@@ -11,11 +11,12 @@ document.addEventListener("DOMContentLoaded", async function () {
   const editKey = document.getElementById('edit-key');
   let key;
 
-  chrome.storage.sync.get('key', function (val) {
+  chrome.storage.sync.get(['key', 'PAGE_TEXT'], function (val) {
     if (val.key) {
       key = val.key;
       toggleKey(true);
     }
+    if (val.PAGE_TEXT) console.log(val.PAGE_TEXT);
     init();
   });
 
@@ -79,8 +80,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     })
   }
 
+
   const init = () => {
     doListeners();
   }
-});
 
+});
