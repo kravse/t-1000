@@ -1,12 +1,12 @@
 const T1000Main = function () {
   let mostRecentTargetText = '';
   function init() {
-    chrome.storage.sync.set({ 'PAGE_TEXT': 'helllllllo' });
     addButton();
   }
+
   function setListeners() {
     let t1000Button = document.getElementById('t-1000-button');
-    document.addEventListener('mouseover', (e) => {
+    document.addEventListener('mouseenter', (e) => {
       const el = e.target;
       if (el.nodeName !== 'ARTICLE') return;
       mostRecentTargetText = el.textContent;
