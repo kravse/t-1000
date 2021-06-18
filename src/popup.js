@@ -1,3 +1,5 @@
+const { RandomForestClassifier } = require("./random_forest_classifier.js")
+
 const COLOR = require('color');
 const AXIOS = require('axios');
 
@@ -27,13 +29,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
   const handleResponse = (likelihoods) => {
-    result.innerHTML ='';
+    result.innerHTML = '';
     for (val of likelihoods.token_likelihoods) {
       let clone = textNode.cloneNode(true);
       clone.innerHTML = val.token;
-      clone.style.background = COLOR.rgb(214, 88, 88, (1 / -val.likelihood));
+      clone.style.background = COLOR.rgb(214, 88, 214, (1 / -val.likelihood));
       result.appendChild(clone);
     }
+    console.log(RandomForestClassifier);
+    console.log("RandomForestClassifier");
+    console.log(RandomForestClassifier([0.09061432497762174, 0.3033870263106966, 0.013660607427535396, 0.4036923086619162, 0.01865715464146048, 0.1699885779807697]));
   }
   const doListeners = () => {
     form.addEventListener("submit", async (e) => {
@@ -51,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     editKey.addEventListener('click', (e) => {
       toggleKey(false);
     })
-    document.getElementById('try-again').addEventListener('click', (e)=> {
+    document.getElementById('try-again').addEventListener('click', (e) => {
       container.classList.remove('result-available')
       document.getElementById('text-area').value = '';
     })
