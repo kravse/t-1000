@@ -5,7 +5,7 @@ const AXIOS = require('axios');
 const MATHJS = require('mathjs');
 
 document.addEventListener("DOMContentLoaded", async function () {
-  const api_url = 'https://api.cohere.ai/baseline-shark/likelihood'
+  const api_url = 'https://api.cohere.ai/baseline-orca/likelihood'
   const container = document.getElementById('container');
   const textNode = document.getElementById('result-text');
   const result = document.getElementById('result-slot');
@@ -64,8 +64,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     MATHJS.median(likelihood_list)]
     var prediction = RandomForestClassifier.default.predict(features);
     var probability_of_bot = prediction[0] / (prediction[0] + prediction[1])
-    const resultSentence = document.createTextNode(`This text is ${Math.floor(100 * probability_of_bot)}% likely to be a bot.`);
-    document.getElementById('result-sentence').appendChild(resultSentence);
+    const resultSentence = document.createTextNode(`This text is ${Math.floor(100 * probability_of_bot)}% similar to bot written text.`);
+    const resSen = document.getElementById('result-sentence').innerHTML = '';
+    resSen.appendChild(resultSentence);
   }
 
   const doListeners = () => {
