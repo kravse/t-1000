@@ -91,10 +91,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     })
     contentForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      container.classList.remove('result-available')
-      contentForm.classList.remove('error')
-      let text = textArea.value
-      submitButton.classList.add('spin')
+      container.classList.remove('result-available');
+      contentForm.classList.remove('error');
+      let text = document.getElementById('text-area').value;
+      submitButton.classList.add('spin');
       AXIOS({
         method: 'post',
         url: api_url,
@@ -118,6 +118,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       capturedTextButton.classList.remove('visible');
       textArea.value = capturedText;
       capturedText = '';
+      console.log(textArea.value)
       chrome.storage.sync.set({ 'PAGE_TEXT': '' });
       submitButton.click();
     })
