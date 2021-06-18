@@ -1,5 +1,8 @@
+const RandomForestClassifier = require("./random_forest_classifier.js")
+
 const COLOR = require('color');
 const AXIOS = require('axios');
+const MATHJS = require('mathjs');
 
 document.addEventListener("DOMContentLoaded", async function () {
   const api_url = 'https://api.cohere.ai/baseline-shark/likelihood'
@@ -40,15 +43,31 @@ document.addEventListener("DOMContentLoaded", async function () {
       container.classList.remove('key-available');
     }
   }
+
   const handleResponse = (likelihoods) => {
-    result.innerHTML ='';
+    result.innerHTML = '';
+    var likelihood_list = new Array()
     for (val of likelihoods.token_likelihoods) {
       let clone = textNode.cloneNode(true);
       clone.innerHTML = val.token;
-      clone.style.background = COLOR.rgb(214, 88, 88, (1 / -val.likelihood));
+      clone.style.background = COLOR.rgb(214, 88, 214, (1 / -val.likelihood));
       result.appendChild(clone);
+      likelihood_list.push(val.likelihood)
     }
+    likelihood_list.shift()
+
+    var features = [likelihoods.likelihood,
+    MATHJS.mean(likelihood_list),
+    MATHJS.variance(likelihood_list),
+    MATHJS.max(likelihood_list),
+    MATHJS.min(likelihood_list),
+    MATHJS.median(likelihood_list)]
+    var prediction = RandomForestClassifier.default.predict(features);
+    var probability_of_bot = prediction[0] / 100
+    const resultSentence = document.createTextNode(`This text is ${Math.floor(100 * probability_of_bot)}% likely to be a bot.`);
+    document.getElementById('result-sentence').appendChild(resultSentence);
   }
+
   const doListeners = () => {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -65,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     editKey.addEventListener('click', (e) => {
       toggleKey(false);
     })
-    document.getElementById('try-again').addEventListener('click', (e)=> {
+    document.getElementById('try-again').addEventListener('click', (e) => {
       container.classList.remove('result-available')
       textArea.value = '';
     })

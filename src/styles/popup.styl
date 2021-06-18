@@ -122,11 +122,16 @@
   position: relative
   margin: 20px auto 40px
   display: none
+  width: 100%
+  overflow: hidden
+  background: #d5c7ff
 
   &.visible
     display: block
 
   &:hover
+    color: #000
+    background: darken(#d5c7ff, 10%)
     &:before
       content: "Click to add to text field"
       position: absolute
@@ -134,5 +139,8 @@
       top: 100%
       padding: 10px 20px 10px 0
       left: 0
-      // border: 2px solid #000
       color: #000;
+
+#result-sentence
+  font-size: 12px
+  font-weight: 600
