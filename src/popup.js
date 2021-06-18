@@ -1,4 +1,4 @@
-const { RandomForestClassifier } = require("./random_forest_classifier.js")
+const RandomForestClassifier = require("./random_forest_classifier.js")
 
 const COLOR = require('color');
 const AXIOS = require('axios');
